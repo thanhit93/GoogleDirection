@@ -1,0 +1,40 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion rootProject.ext.config.compileSdkVersion
+    buildToolsVersion rootProject.ext.config.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.config.minSdkVersion
+        targetSdkVersion rootProject.ext.config.compileSdkVersion
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    def dependency = rootProject.ext.dependency
+    compile dependency.retrofit
+    compile (dependency.retrofitConverterGson){
+        exclude module: 'retrofit'
+    }
+    compile (dependency.googleMap) {
+        exclude module: 'support-annotations'
+        exclude module: 'support-v4'
+    }
+    compile (dependency.googleLocation) {
+        exclude module: 'support-annotations'
+        exclude module: 'support-v4'
+    }
+    compile (dependency.googlePlace) {
+        exclude module: 'support-annotations'
+        exclude module: 'support-v4'
+    }
+}
